@@ -19,8 +19,18 @@ public class RentACatImpl implements RentACat {
 
 	public boolean returnCat(int id) {
 		// TODO
+		if(id < 0) return false;
+		for(int i = 0; i < cats.size(); i++){
+			if(cats.get(i).getId() == id){
+				if(cats.get(i).getRented()){
+					cats.get(i).returnCat();
+					return true;
+				}
+				else return false;
+			}
+		}
 		return false;
-	}
+		}
 
 	/**
 	 * Rent a cat. This should call the .rentCat() method on the cat for the
@@ -34,6 +44,15 @@ public class RentACatImpl implements RentACat {
 
 	public boolean rentCat(int id) {
 		// TODO
+		for(int i = 0 ; i < cats.size();i++){
+			if(id == cats.get(i).getId()){
+				if(cats.get(i).getRented() == false){
+					cats.get(i).rentCat();
+					return true;
+				}
+				else return false;
+			}
+		}
 		return false;
 	}
 
@@ -49,7 +68,13 @@ public class RentACatImpl implements RentACat {
 
 	public String listCats() {
 		// TODO
-		return "WRITE CODE FOR THIS";
+		String list = new String("");
+		for(int i = 0 ; i < cats.size(); i++){
+			if(cats.get(i).getRented() == false){
+				list+=("ID "+cats.get(i).getId()+". "+cats.get(i).getName()+"\n");
+			}
+		}
+		return list;
 	}
 
 	/**
@@ -63,6 +88,10 @@ public class RentACatImpl implements RentACat {
 
 	public boolean catExists(int id) {
 		// TODO
+		if(cats == null || cats.size() == 0) return false;
+		for(int i = 0; i < cats.size(); i++){
+			if(cats.get(i).getId() == id) return true;
+		}
 		return false;
 	}
 
@@ -166,9 +195,9 @@ public class RentACatImpl implements RentACat {
 				option = sc.nextInt();
 				switch (option) {
 				case 1:
-					System.out.println("Cats for Rent");
-					System.out.print(rc.listCats());
-					break;
+				System.out.println("Cats for Rent");
+				System.out.print(rc.listCats());
+				break;
 				case 2:
 					validCat = false;
 					int catIdToRent;
